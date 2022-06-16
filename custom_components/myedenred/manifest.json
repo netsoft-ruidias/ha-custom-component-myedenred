@@ -1,0 +1,17 @@
+{
+    "version": "0.1.0",
+    "domain": "myedenred",
+    "name": "myEdenred Card Integration",
+    "documentation": "https://github.com/netsoft-ruidias/ha-custom-component-myedenred/blob/main/README.md",
+    "issue_tracker": "https://github.com/netsoft-ruidias/ha-custom-component-myedenred/issues",
+    "iot_class": "cloud_polling",
+    "requirements": [
+        "aiohttp",
+        "logging"
+    ],
+    "dependencies": [],
+    "codeowners": [
+        "@ruidias-netsoft"
+    ],
+    "config_flow": true
+}
