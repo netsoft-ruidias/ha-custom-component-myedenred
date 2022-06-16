@@ -2,7 +2,7 @@ import logging
 import voluptuous as vol
 import async_timeout
 
-from homeassistant import (config_entries, data_entry_flow)
+from homeassistant import config_entries
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from api.myedenred import MY_EDENRED
@@ -11,18 +11,22 @@ from .const import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 DATA_SCHEMA = vol.Schema(
-    { vol.Required("username"): str, vol.Required("password"): str }
+    { 
+        vol.Required("username"): str, 
+        vol.Required("password"): str 
+    }
 )
 
 @config_entries.HANDLERS.register(DOMAIN)
-class MyEdenredConfigFlow(data_entry_flow.FlowHandler):
+class MyEdenredConfigFlow(config_entries.ConfigFlow):
     """MyEdenred config flow."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_ASSUMED
+    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
     async def async_step_user(self, user_input=None):
         """Handle a flow initialized by the user interface."""
+        _LOGGER.info("Starting async_step_user...")
         errors = {}
 
         if self._async_current_entries():
@@ -30,7 +34,12 @@ class MyEdenredConfigFlow(data_entry_flow.FlowHandler):
         if self.hass.data.get(DOMAIN):
             return self.async_abort(reason="single_instance_allowed")
         
+        _LOGGER.info("Setup domain %s", DOMAIN)
+
         if user_input is not None:
+            _LOGGER.info("user_input is not None")
+            _LOGGER.info(user_input)
+
             await self.async_set_unique_id(user_input["username"].lower())
             self._abort_if_unique_id_configured()
 
@@ -41,18 +50,20 @@ class MyEdenredConfigFlow(data_entry_flow.FlowHandler):
             )
 
             if valid:
+                _LOGGER.info("Config is valid!")
                 return self.async_create_entry(
-                    title="MyEdenred", 
-                    data={
-                        "username": user_input["username"], 
-                        "password": user_input["password"]
-                    }
+                    title="MyEdenred " + user_input["username"], 
+                    data=user_input
                 ) 
             else:
                 errors = {"base": "auth"}
 
+        _LOGGER.info("Show async_show_form...")
+
         return self.async_show_form(
-            step_id="init", data_schema=DATA_SCHEMA, errors=errors,
+            step_id="user", 
+            data_schema=DATA_SCHEMA, 
+            errors=errors,
         )
 
     async def _test_credentials(self, username, password):
