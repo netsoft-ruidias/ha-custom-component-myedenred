@@ -2,7 +2,7 @@ import logging
 import voluptuous as vol
 import async_timeout
 
-from homeassistant import config_entries
+from homeassistant import (config_entries, data_entry_flow)
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from api.myedenred import MY_EDENRED
@@ -15,7 +15,7 @@ DATA_SCHEMA = vol.Schema(
 )
 
 @config_entries.HANDLERS.register(DOMAIN)
-class MyEdenredConfigFlow(config_entries.ConfigFlow):
+class MyEdenredConfigFlow(data_entry_flow.FlowHandler):
     """MyEdenred config flow."""
 
     VERSION = 1
@@ -42,13 +42,17 @@ class MyEdenredConfigFlow(config_entries.ConfigFlow):
 
             if valid:
                 return self.async_create_entry(
-                    title="MyEdenred", data={"username": user_input["username"], "password": user_input["password"]}
+                    title="MyEdenred", 
+                    data={
+                        "username": user_input["username"], 
+                        "password": user_input["password"]
+                    }
                 ) 
             else:
                 errors = {"base": "auth"}
 
         return self.async_show_form(
-            step_id="user", data_schema=DATA_SCHEMA, errors=errors,
+            step_id="init", data_schema=DATA_SCHEMA, errors=errors,
         )
 
     async def _test_credentials(self, username, password):

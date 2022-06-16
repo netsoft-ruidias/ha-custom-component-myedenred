@@ -1,2 +1,2 @@
-# ha-custom-component-myedenred
+# myEdenred Card Integration
 myEdenred - Custom Component for Home Assistant
