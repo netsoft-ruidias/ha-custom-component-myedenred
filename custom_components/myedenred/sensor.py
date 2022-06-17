@@ -11,8 +11,8 @@ from homeassistant import core
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from api.myedenred import MY_EDENRED
-from api.card import Card
+from .api.myedenred import MY_EDENRED
+from .api.card import Card
 from .const import (
     DEFAULT_ICON,
     UNIT_OF_MEASUREMENT
