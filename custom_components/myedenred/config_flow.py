@@ -8,7 +8,7 @@ import async_timeout
 from homeassistant import config_entries
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from api.myedenred import MY_EDENRED
+from .api.myedenred import MY_EDENRED
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
