@@ -5,7 +5,7 @@ import logging
 import voluptuous as vol
 import async_timeout
 
-from homeassistant import data_entry_flow, config_entries
+from homeassistant import config_entries
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from api.myedenred import MY_EDENRED
@@ -20,8 +20,7 @@ DATA_SCHEMA = vol.Schema(
     }
 )
 
-@config_entries.HANDLERS.register(DOMAIN)
-class MyEdenredConfigFlow(data_entry_flow.FlowHandler):
+class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """MyEdenred config flow."""
 
     VERSION = 1
