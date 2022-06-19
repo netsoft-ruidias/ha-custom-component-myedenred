@@ -18,21 +18,36 @@ from .const import (
     UNIT_OF_MEASUREMENT
 )
 
-async def async_setup_platform(
-    hass: core.HomeAssistant,
-    config: ConfigType,
-    async_add_entities,
-    discovery_info: DiscoveryInfoType | None = None
-) -> None:
-    """Set up the sensor platform."""
 
+#    async def async_setup_platform(
+#        hass: core.HomeAssistant,
+#        config: ConfigType,
+#        async_add_entities,
+#        discovery_info: DiscoveryInfoType | None = None
+#    ) -> None:
+#        """Set up the sensor platform."""
+#
+#        session = async_get_clientsession(hass, True)
+#        api = MY_EDENRED(session)
+#        token = await api.login(config["username"], config["password"])
+#        if (token):
+#            cards = await api.getCards(token)
+#            sensors = [MyEdenredSensor(card, api, config["username"], config["password"]) for card in cards]
+#            async_add_entities(sensors, update_before_add=True)
+
+async def async_setup_entry(
+    hass, 
+    config, 
+    async_add_entities):
+    """Setup sensor platform."""
     session = async_get_clientsession(hass, True)
     api = MY_EDENRED(session)
+
     token = await api.login(config["username"], config["password"])
     if (token):
         cards = await api.getCards(token)
         sensors = [MyEdenredSensor(card, api, config["username"], config["password"]) for card in cards]
-        async_add_entities(sensors, update_before_add=True)
+        async_add_entities(sensors)
 
 
 class MyEdenredSensor(SensorEntity):

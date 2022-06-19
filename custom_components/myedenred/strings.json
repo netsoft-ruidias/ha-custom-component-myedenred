@@ -1,11 +1,24 @@
 {
+    "title": "MyEdenred meal card integration",
     "config": {
         "step": {
             "user": {
-                "title": "Add Credentials",
-                "description": "Some description",
+                "title": "Add Credentials (user)",
+                "description": "Some description (user)",
                 "data": {
-                    "username": "Username (email)",
+                    "username": "Email",
+                    "password": "Password"
+                },
+                "data_description": {
+                    "username": "The email used to login in https://www.myedenred.pt/ portal",
+                    "password": "The password used to login in https://www.myedenred.pt/ portal"
+                }
+            },
+            "init": {
+                "title": "Add Credentials (init)",
+                "description": "Some description (init)",
+                "data": {
+                    "username": "Username",
                     "password": "Password"
                 },
                 "data_description": {
@@ -15,7 +28,7 @@
             }
         },
         "error": {
-            "auth": "API Key, Check ID, Site root or Ping endpoint is wrong."
+            "auth": "Invalid credentials accessing https://www.myedenred.pt/ portal."
         },
         "abort": {
             "single_instance_allowed": "Only a single configuration of myEdenred is allowed.",
