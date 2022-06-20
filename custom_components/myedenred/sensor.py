@@ -1,6 +1,7 @@
 """Platform for sensor integration."""
 from __future__ import annotations
 from typing import Any, Dict
+import logging
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -19,6 +20,7 @@ from .const import (
     UNIT_OF_MEASUREMENT
 )
 
+_LOGGER = logging.getLogger(__name__)
 
 #    async def async_setup_platform(
 #        hass: core.HomeAssistant,
@@ -38,11 +40,17 @@ from .const import (
 
 async def async_setup_entry(
     hass: HomeAssistant, 
-    config: ConfigEntry, 
+    config_entry: ConfigEntry, 
     async_add_entities):
     """Setup sensor platform."""
     session = async_get_clientsession(hass, True)
     api = MY_EDENRED(session)
+
+    _LOGGER.info("async_setup_entry", "config_entry", config_entry)
+
+    config = config_entry.data
+
+    _LOGGER.info("async_setup_entry", "config", config)
 
     token = await api.login(config["username"], config["password"])
     if (token):
