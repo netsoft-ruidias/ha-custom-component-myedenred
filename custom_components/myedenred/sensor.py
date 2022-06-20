@@ -124,10 +124,6 @@ class MyEdenredSensor(SensorEntity):
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
-
-        _LOGGER.debug("MyEdenredSensor", "async_update")
-
-        self._attr_native_value = 23
         token = await self._api.login(self._config["username"], self._config["password"])
         if (token):
             account = await self._api.getAccountDetails(self._card.id, token)
