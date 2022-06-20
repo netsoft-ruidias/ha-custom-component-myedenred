@@ -75,8 +75,6 @@ class MyEdenredSensor(SensorEntity):
         self._device_class = SensorDeviceClass.MONETARY
         self._state_class = SensorStateClass.TOTAL
 
-        self.attrs: Dict[str, Any] = card
-
     _attr_native_unit_of_measurement = "€"
     _attr_device_class = SensorDeviceClass.MONETARY
     _attr_state_class = SensorStateClass.TOTAL
@@ -113,12 +111,13 @@ class MyEdenredSensor(SensorEntity):
         return self._icon
 
     @property
-    def device_state_attributes(self) -> Dict[str, Any]:
-        return self.attrs
-
-    @property
-    def ownerName(self):
-        return self._card.ownerName
+    def extra_state_attributes(self):
+        """Return the state attributes."""
+        return {
+            "ownerName": self._card.ownerName,
+            "cardStatus": self._card.status,
+            "cardNumber": self._card.number
+        }
 
     async def async_update(self) -> None:
         """Fetch new state data for the sensor.
