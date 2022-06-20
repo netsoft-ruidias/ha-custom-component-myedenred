@@ -7,8 +7,9 @@ from homeassistant.components.sensor import (
     SensorEntity,
     SensorStateClass,
 )
-from homeassistant import core
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
+from homeassistant.core import HomeAssistant
+from homeassistant.const import DEVICE_CLASS_MONETARY, ATTR_ATTRIBUTION
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api.myedenred import MY_EDENRED
@@ -36,8 +37,8 @@ from .const import (
 #            async_add_entities(sensors, update_before_add=True)
 
 async def async_setup_entry(
-    hass, 
-    config, 
+    hass: HomeAssistant, 
+    config: ConfigEntry, 
     async_add_entities):
     """Setup sensor platform."""
     session = async_get_clientsession(hass, True)
