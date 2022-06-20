@@ -21,10 +21,6 @@ async def async_setup(hass: HomeAssistant, config: ConfigType):
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up the component from a config entry."""
-    _LOGGER.debug("Entry data: %s", entry.data)
-    _LOGGER.debug("Entry options: %s", entry.options)
-    _LOGGER.debug("Entry unique ID: %s", entry.unique_id)
-
     hass.data.setdefault(DOMAIN, {})
 
     hass.config_entries.async_setup_platforms(entry, PLATFORMS)
