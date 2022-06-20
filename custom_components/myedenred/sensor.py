@@ -131,6 +131,6 @@ class MyEdenredSensor(SensorEntity):
         token = await self._api.login(self._config["username"], self._config["password"])
         if (token):
             account = await self._api.getAccountDetails(self._card.id, token)
-            self.state = account.availableBalance
+            self._state = account.availableBalance
             
 
