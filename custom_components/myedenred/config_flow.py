@@ -12,6 +12,7 @@ from .api.myedenred import MY_EDENRED
 from .const import DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
+_LOGGER.setLevel(logging.DEBUG)
 
 DATA_SCHEMA = vol.Schema(
     { 
@@ -28,7 +29,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(self, user_input=None):
         """Handle a flow initialized by the user interface."""
-        _LOGGER.info("Starting async_step_user...")
+        _LOGGER.debug("Starting async_step_user...")
         errors = {}
 
         #if self._async_current_entries():
@@ -36,11 +37,11 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         #if self.hass.data.get(DOMAIN):
         #    return self.async_abort(reason="single_instance_allowed")
         
-        _LOGGER.info("Setup domain %s", DOMAIN)
+        _LOGGER.debug("Setup domain %s", DOMAIN)
 
         if user_input is not None:
-            _LOGGER.info("user_input is not None")
-            _LOGGER.info(user_input)
+            _LOGGER.debug("user_input is not None")
+            _LOGGER.debug(user_input)
 
             #await self.async_set_unique_id(user_input["username"].lower())
             #self._abort_if_unique_id_configured()
@@ -49,7 +50,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             valid = await self._test_credentials(user_input)
 
             if valid:
-                _LOGGER.info("Config is valid!")
+                _LOGGER.debug("Config is valid!")
                 return self.async_create_entry(
                     title="MyEdenred " + user_input["username"], 
                     data = user_input
@@ -57,7 +58,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 errors = {"base": "auth"}
 
-        _LOGGER.info("Show async_show_form...")
+        _LOGGER.debug("Show async_show_form...")
 
         return self.async_show_form(
             step_id="user", 
@@ -69,7 +70,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Return true if credentials is valid."""        
         session = async_get_clientsession(self.hass, True)
         async with async_timeout.timeout(10):
-            _LOGGER.info("Checking Credentials")
+            _LOGGER.debug("Checking Credentials...")
             api = MY_EDENRED(session)
             try:
                 token = await api.login(user_input["username"], user_input["password"])

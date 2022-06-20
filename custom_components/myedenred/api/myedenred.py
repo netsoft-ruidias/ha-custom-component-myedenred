@@ -10,8 +10,8 @@ from .consts import (
     API_ACCOUNTMOVEMENT_URL
 )
 
-LOGGER = logging.getLogger(__name__)
-LOGGER.setLevel(logging.DEBUG)
+_LOGGER = logging.getLogger(__name__)
+_LOGGER.setLevel(logging.DEBUG)
 
 class MY_EDENRED:
     """Interfaces to https://myedenred.pt/"""
@@ -24,7 +24,7 @@ class MY_EDENRED:
         """Issue LOGIN request."""
         try:
             params = { 'appVersion': '1.0', 'appType': 'PORTAL', 'channel': 'WEB' }
-            LOGGER.debug("Logging in...")
+            _LOGGER.debug("Logging in...")
             async with self.websession.post(
                 API_LOGIN_URL, 
                 params = params,
@@ -36,12 +36,12 @@ class MY_EDENRED:
                     return json['data']['token']
                 raise Exception("Could not retrieve token for user, login failed")
         except aiohttp.ClientError as err:
-            LOGGER.error(err)
+            _LOGGER.error(err)
 
     async def getCards(self, token) -> Card:
         """Issue CARDS requests."""
         try:
-            LOGGER.debug("Getting list of available cards...")
+            _LOGGER.debug("Getting list of available cards...")
             async with self.websession.get(
                 API_LIST_URL, 
                 headers = { 
@@ -55,12 +55,12 @@ class MY_EDENRED:
                     return [ Card(card) for card in json['data'] ]
                 raise Exception("Could not retrieve cards list from API")
         except aiohttp.ClientError as err:
-            LOGGER.error(err)
+            _LOGGER.error(err)
 
     async def getAccountDetails(self, cardId, token) -> Account:
         """Issue ACCOUNT MOVEMENT requests."""
         try:
-            LOGGER.debug("Getting card details and its movements...")
+            _LOGGER.debug("Getting card details and its movements...")
             async with self.websession.get(
                 API_ACCOUNTMOVEMENT_URL.format(cardId), 
                 headers = { 
@@ -74,4 +74,4 @@ class MY_EDENRED:
                         json['data']['movementList'])
                 raise Exception("Could not retrieve account information from API")
         except aiohttp.ClientError as err:
-            LOGGER.error(err)
+            _LOGGER.error(err)

@@ -21,6 +21,7 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+_LOGGER.setLevel(logging.DEBUG)
 
 #    async def async_setup_platform(
 #        hass: core.HomeAssistant,
@@ -46,11 +47,11 @@ async def async_setup_entry(
     session = async_get_clientsession(hass, True)
     api = MY_EDENRED(session)
 
-    _LOGGER.info("async_setup_entry", "config_entry", config_entry)
+    _LOGGER.debug("async_setup_entry", "config_entry", config_entry)
 
     config = config_entry.data
 
-    _LOGGER.info("async_setup_entry", "config", config)
+    _LOGGER.debug("async_setup_entry", "config", config)
 
     token = await api.login(config["username"], config["password"])
     if (token):
@@ -97,6 +98,9 @@ class MyEdenredSensor(SensorEntity):
         """Fetch new state data for the sensor.
         This is the only method that should fetch new data for Home Assistant.
         """
+
+        _LOGGER.debug("MyEdenredSensor", "async_update")
+
         self._attr_native_value = 23
         token = await self._api.api.login(self._api.username, self._api.password)
         if (token):

@@ -10,19 +10,20 @@ from .const import DOMAIN
 
 __version__ = "1.0.0"
 _LOGGER = logging.getLogger(__name__)
+_LOGGER.setLevel(logging.DEBUG)
 
 PLATFORMS: list[str] = ["sensor"]
 
 async def async_setup(hass: HomeAssistant, config: ConfigType):
     # Return boolean to indicate that initialization was successful.
-    _LOGGER.info("async_setup")
+    _LOGGER.debug("async_setup")
     return True
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up the component from a config entry."""
-    _LOGGER.info("Entry data: %s", entry.data)
-    _LOGGER.info("Entry options: %s", entry.options)
-    _LOGGER.info("Entry unique ID: %s", entry.unique_id)
+    _LOGGER.debug("Entry data: %s", entry.data)
+    _LOGGER.debug("Entry options: %s", entry.options)
+    _LOGGER.debug("Entry unique ID: %s", entry.unique_id)
 
     hass.data.setdefault(DOMAIN, {})
 
