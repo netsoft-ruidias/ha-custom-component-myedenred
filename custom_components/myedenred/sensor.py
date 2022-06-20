@@ -86,11 +86,6 @@ class MyEdenredSensor(SensorEntity):
         return self._card.id
 
     @property
-    def available(self) -> bool:
-        """Return True if entity is available."""
-        return self._available
-
-    @property
     def state(self) -> float:
         return self._state
 
