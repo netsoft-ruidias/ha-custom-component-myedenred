@@ -16,6 +16,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from .api.myedenred import MY_EDENRED
 from .api.card import Card
 from .const import (
+    DOMAIN,
     DEFAULT_ICON,
     UNIT_OF_MEASUREMENT
 )
@@ -56,20 +57,24 @@ async def async_setup_entry(
     token = await api.login(config["username"], config["password"])
     if (token):
         cards = await api.getCards(token)
-        sensors = [MyEdenredSensor(card, api, config["username"], config["password"]) for card in cards]
+        sensors = [MyEdenredSensor(card, api, config) for card in cards]
         async_add_entities(sensors)
 
 
 class MyEdenredSensor(SensorEntity):
     """Representation of a MyEdenred Card (Sensor)."""
 
-    def __init__(self, card: Card, api: MY_EDENRED, username: str, password: str):
+    def __init__(self, card: Card, api: MY_EDENRED, config: Any):
         super().__init__()
         self._card = card
-        self._api = { api, username, password }
+        self._api = api
+        self._config = config
         self._state = 0
         self._icon = DEFAULT_ICON
         self._unit_of_measurement = UNIT_OF_MEASUREMENT
+        self._device_class = SensorDeviceClass.MONETARY
+        self._state_class = SensorStateClass.TOTAL
+
         self.attrs: Dict[str, Any] = card
 
     _attr_native_unit_of_measurement = "€"
@@ -79,20 +84,41 @@ class MyEdenredSensor(SensorEntity):
     @property
     def name(self) -> str:
         """Return the name of the entity."""
-        return self._card.number
+        return f"Edenred Card {self._card.number}"
 
     @property
     def unique_id(self) -> str:
         """Return the unique ID of the sensor."""
-        return self._card.id
+        return f"{DOMAIN}-{self._card.id}"
 
     @property
     def state(self) -> float:
         return self._state
 
     @property
+    def device_class(self):
+        return self._device_class
+
+    @property
+    def state_class(self):
+        return self._state_class
+
+    @property
+    def unit_of_measurement(self):
+        """Return the unit the value is expressed in."""
+        return self._unit_of_measurement
+
+    @property
+    def icon(self):
+        return self._icon
+
+    @property
     def device_state_attributes(self) -> Dict[str, Any]:
         return self.attrs
+
+    @property
+    def ownerName(self):
+        return self._card.ownerName
 
     async def async_update(self) -> None:
         """Fetch new state data for the sensor.
@@ -102,9 +128,9 @@ class MyEdenredSensor(SensorEntity):
         _LOGGER.debug("MyEdenredSensor", "async_update")
 
         self._attr_native_value = 23
-        token = await self._api.api.login(self._api.username, self._api.password)
+        token = await self._api.login(self._config["username"], self._config["password"])
         if (token):
-            account = await self._api.api.getAccountDetails(self._card.id, token)
+            account = await self._api.getAccountDetails(self._card.id, token)
             self.state = account.availableBalance
             
 
