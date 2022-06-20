@@ -18,7 +18,7 @@ class Account:
         return self._data["cardNumber"]
 
     @property
-    def availableBalance(self):
+    def availableBalance(self) -> float:
         return self._data["availableBalance"]
 
     @property
