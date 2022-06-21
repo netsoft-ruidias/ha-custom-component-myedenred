@@ -1,0 +1,26 @@
+{
+    "title": "MyEdenred Cartão Refeição",
+    "config": {
+        "step": {
+            "user": {
+                "title": "Credenciais de Acesso",
+                "description": "Por favor, introduza o seu nome de utilizador e palavra passe que usa para ter acesso ao portal https://www.myedenred.pt/.",
+                "data": {
+                    "username": "Email",
+                    "password": "Palavra Passe"
+                },
+                "data_description": {
+                    "username": "O Email usado para aceder ao portal https://www.myedenred.pt/",
+                    "password": "O Palavra Passe usada para aceder ao portal https://www.myedenred.pt/"
+                }
+            }
+        },
+        "error": {
+            "auth": "Credenciais inválidas para https://www.myedenred.pt/."
+        },
+        "abort": {
+            "single_instance_allowed": "Só é permitida uma unica integração do myEdenred.",
+            "already_configured": "Esta integração já existe"
+        }
+    }
+}

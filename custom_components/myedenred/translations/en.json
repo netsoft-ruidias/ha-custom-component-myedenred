@@ -13,7 +13,7 @@
                     "username": "The email used to login in https://www.myedenred.pt/ portal",
                     "password": "The password used to login in https://www.myedenred.pt/ portal"
                 }
-            },
+            }
         },
         "error": {
             "auth": "Invalid credentials accessing https://www.myedenred.pt/ portal."
