@@ -14,6 +14,7 @@ _LOGGER.setLevel(logging.DEBUG)
 
 PLATFORMS: list[str] = ["sensor"]
 
+
 async def async_setup(hass: HomeAssistant, config: ConfigType):
     # Return boolean to indicate that initialization was successful.
     _LOGGER.debug("async_setup")
@@ -28,8 +29,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-    if unload_ok:
+    result = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if result:
         hass.data[DOMAIN].pop(entry.entry_id)
 
-    return unload_ok    
+    return result
+
+async def async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Reload config entry."""
+    await async_unload_entry(hass, entry)
+    await async_setup_entry(hass, entry)
