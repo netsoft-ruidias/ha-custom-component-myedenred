@@ -7,11 +7,13 @@
                 "description": "Por favor, introduza o seu nome de utilizador e palavra passe que usa para ter acesso ao portal https://www.myedenred.pt/.",
                 "data": {
                     "username": "Email",
-                    "password": "Palavra Passe"
+                    "password": "Palavra Passe",
+                    "includeTransactions": "Incluir a lista de transações?"
                 },
                 "data_description": {
                     "username": "O Email usado para aceder ao portal https://www.myedenred.pt/",
-                    "password": "O Palavra Passe usada para aceder ao portal https://www.myedenred.pt/"
+                    "password": "O Palavra Passe usada para aceder ao portal https://www.myedenred.pt/",
+                    "includeTransactions": "Incluir a lista de transações"
                 }
             }
         },

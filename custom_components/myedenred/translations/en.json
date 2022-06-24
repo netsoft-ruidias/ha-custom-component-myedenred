@@ -7,11 +7,13 @@
                 "description": "Please type your credentials",
                 "data": {
                     "username": "Email",
-                    "password": "Password"
+                    "password": "Password",
+                    "includeTransactions": "Include the transaction list?"
                 },
                 "data_description": {
                     "username": "The email used to login in https://www.myedenred.pt/ portal",
-                    "password": "The password used to login in https://www.myedenred.pt/ portal"
+                    "password": "The password used to login in https://www.myedenred.pt/ portal",
+                    "includeTransactions": "Include the transaction list"
                 }
             }
         },
