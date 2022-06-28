@@ -1,12 +1,16 @@
-[![GitHub Release][releases-shield]][releases]
-[![License][license-shield]](LICENSE.md)
+![GitHub](https://img.shields.io/github/license/netsoft-ruidias/ha-custom-component-myedenred?style=for-the-badge)
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
 
-![Project Maintenance][maintenance-shield]
-[![GitHub Activity][commits-shield]][commits]
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/netsoft-ruidias/ha-custom-component-myedenred?style=for-the-badge)
+![GitHub Release Date](https://img.shields.io/github/release-date/netsoft-ruidias/ha-custom-component-myedenred?style=for-the-badge)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/netsoft-ruidias/ha-custom-component-myedenred?style=for-the-badge)
 
 # myEdenred Card Integration
 myEdenred - Custom Component for Home Assistant
+
+The data source for this integration is the [MyEdenred Portugal](https://www.myedenred.pt/).
+
+The author of this project categorically rejects any and all responsibility for the card balance and other data that were presented by the integration.
 
 # Installation
 ## HACS (Recommended)
@@ -25,7 +29,7 @@ Assuming you have already installed and configured HACS, follow these steps:
 9. Ready! Now continue with the configuration.
 
 ## Manual
-(not recomended)
+Manual installation is not recomended
 
 # Configuration
 
@@ -36,4 +40,6 @@ Assuming you have already installed and configured HACS, follow these steps:
 5. Repeat the procedure as many times as desired to include other cards you may have
 
 # Legal notice
+This is a personal project and isn't in any way affiliated with, sponsored or endorsed by [MyEdenred Portugal](https://www.myedenred.pt/).
+
 All product names, trademarks and registered trademarks in (the images in) this repository, are property of their respective owners. All images in this repository are used by the project for identification purposes only.
