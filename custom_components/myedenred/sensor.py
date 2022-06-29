@@ -21,7 +21,8 @@ from .api.card import Card
 from .const import (
     DOMAIN,
     DEFAULT_ICON,
-    UNIT_OF_MEASUREMENT
+    UNIT_OF_MEASUREMENT,
+    ATTRIBUTION
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -98,6 +99,10 @@ class MyEdenredSensor(SensorEntity):
     @property
     def icon(self):
         return self._icon
+
+    @property
+    def attribution(self):
+        return ATTRIBUTION
 
     @property
     def extra_state_attributes(self) -> Dict[str, Any]:
