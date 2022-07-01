@@ -15,5 +15,5 @@ class Transaction:
         return self._data["transactionName"]
 
     @property
-    def amount(self):
-        return self._data["amount"]
+    def amount(self) -> float:
+        return float(self._data["amount"])

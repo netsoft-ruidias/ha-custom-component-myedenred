@@ -34,6 +34,7 @@ class MY_EDENRED:
             ) as res:
                 if res.status == 200 and res.content_type == "application/json":
                     json = await res.json()
+                    _LOGGER.debug("Done logging in.")
                     return json['data']['token']
                 raise Exception("Could not retrieve token for user, login failed")
         except aiohttp.ClientError as err:
@@ -51,8 +52,7 @@ class MY_EDENRED:
             ) as res:
                 if res.status == 200 and res.content_type == "application/json":
                     json = await res.json()
-                    #print (json)
-                    #return [ x['id'] for x in json['data'] ]
+                    _LOGGER.debug("Done getting list of available cards.")
                     return [ Card(card) for card in json['data'] ]
                 raise Exception("Could not retrieve cards list from API")
         except aiohttp.ClientError as err:
@@ -61,7 +61,7 @@ class MY_EDENRED:
     async def getAccountDetails(self, cardId, token) -> Account:
         """Issue ACCOUNT MOVEMENT requests."""
         try:
-            _LOGGER.debug("Getting card details and its movements...")
+            _LOGGER.debug("Getting card details and their movements...")
             async with self.websession.get(
                 API_ACCOUNTMOVEMENT_URL.format(cardId), 
                 headers = { 
@@ -70,6 +70,7 @@ class MY_EDENRED:
             ) as res:
                 if res.status == 200 and res.content_type == "application/json":
                     json = await res.json()
+                    _LOGGER.debug("Done getting card details and their movements.")
                     return Account(
                         json['data']['account'],
                         json['data']['movementList'])
