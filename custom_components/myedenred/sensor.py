@@ -15,14 +15,13 @@ from homeassistant.components.sensor import (
 from homeassistant.core import HomeAssistant
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.const import CONF_USERNAME, CONF_PASSWORD
 
-from .api.myedenred import MY_EDENRED
+from .api.myedenred import MyEdenredAPI
 from .api.card import Card
 from .const import (
-    DOMAIN,
-    DEFAULT_ICON,
-    UNIT_OF_MEASUREMENT,
-    ATTRIBUTION
+    DOMAIN, DEFAULT_ICON, UNIT_OF_MEASUREMENT, ATTRIBUTION,
+    CONF_COUNTRY
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -36,10 +35,10 @@ async def async_setup_entry(hass: HomeAssistant,
                             async_add_entities: Callable):
     """Setup sensor platform."""
     session = async_get_clientsession(hass, True)
-    api = MY_EDENRED(session)
+    api = MyEdenredAPI(session, config_entry[CONF_COUNTRY])
 
     config = config_entry.data
-    token = await api.login(config["username"], config["password"])
+    token = await api.login(config[CONF_USERNAME], config[CONF_PASSWORD])
 
     if (token):
         cards = await api.getCards(token)
@@ -50,7 +49,7 @@ async def async_setup_entry(hass: HomeAssistant,
 class MyEdenredSensor(SensorEntity):
     """Representation of a MyEdenred Card (Sensor)."""
 
-    def __init__(self, card: Card, api: MY_EDENRED, config: Any):
+    def __init__(self, card: Card, api: MyEdenredAPI, config: Any):
         super().__init__()
         self._card = card
         self._api = api

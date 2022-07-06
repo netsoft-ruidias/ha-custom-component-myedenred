@@ -14,11 +14,12 @@ _LOGGER = logging.getLogger(__name__)
 _LOGGER.setLevel(logging.DEBUG)
 
 
-class MY_EDENRED:
+class MyEdenredAPI:
     """Interfaces to https://myedenred.pt/"""
 
-    def __init__(self, websession):
+    def __init__(self, websession, country: str):
         self.websession = websession
+        self._country = country
         self.json = None
 
     async def login(self, username, password):
@@ -27,7 +28,7 @@ class MY_EDENRED:
             params = { 'appVersion': '1.0', 'appType': 'PORTAL', 'channel': 'WEB' }
             _LOGGER.debug("Logging in...")
             async with self.websession.post(
-                API_LOGIN_URL, 
+                API_LOGIN_URL[self._country], 
                 params = params,
                 headers = { "Content-Type": "application/json" },
                 json={"userId":username,"password":password}
@@ -45,7 +46,7 @@ class MY_EDENRED:
         try:
             _LOGGER.debug("Getting list of available cards...")
             async with self.websession.get(
-                API_LIST_URL, 
+                API_LIST_URL[self._country], 
                 headers = { 
                     "Content-Type": "application/json",
                     "Authorization": token }
@@ -63,7 +64,7 @@ class MY_EDENRED:
         try:
             _LOGGER.debug("Getting card details and their movements...")
             async with self.websession.get(
-                API_ACCOUNTMOVEMENT_URL.format(cardId), 
+                API_ACCOUNTMOVEMENT_URL[self._country].format(cardId), 
                 headers = { 
                     "Content-Type": "application/json",
                     "Authorization": token }

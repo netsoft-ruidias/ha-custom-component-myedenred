@@ -1,11 +1,11 @@
 import asyncio
 import aiohttp
 
-from custom_components.myedenred.api.myedenred import MY_EDENRED
+from custom_components.myedenred.api.myedenred import MyEdenredAPI
 
 async def main():
     async with aiohttp.ClientSession() as session:
-        api = MY_EDENRED(session)
+        api = MyEdenredAPI(session, "PT")
 
         username = input("Enter your username/email..: ")
         password = input("Enter your password........: ")
