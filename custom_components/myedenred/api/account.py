@@ -1,5 +1,6 @@
 """Account Class."""
 
+from typing import List
 from .transaction import Transaction
 
 class Account:
@@ -34,7 +35,7 @@ class Account:
         return self._data["cardActivated"]
 
     @property
-    def movementList(self):
+    def movementList(self) -> List[Transaction]:
         return [
             Transaction(x) for x in self._movementList
         ]
