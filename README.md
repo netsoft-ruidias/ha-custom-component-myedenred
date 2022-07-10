@@ -158,3 +158,9 @@ tap_action:
 This is a personal project and isn't in any way affiliated with, sponsored or endorsed by [MyEdenred Portugal](https://www.myedenred.pt/).
 
 All product names, trademarks and registered trademarks in (the images in) this repository, are property of their respective owners. All images in this repository are used by the project for identification purposes only.
+
+---
+Please, support my other integrations: 
+[Preços dos Combustivels](https://github.com/netsoft-ruidias/ha-custom-component-precoscombustiveis) | 
+[Sodexo](https://github.com/netsoft-ruidias/ha-custom-component-sodexo) |
+[Coverflex](https://github.com/netsoft-ruidias/ha-custom-component-coverflex)
