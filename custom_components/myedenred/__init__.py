@@ -23,8 +23,8 @@ async def async_setup(hass: HomeAssistant, config: ConfigType):
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up the component from a config entry."""
     hass.data.setdefault(DOMAIN, {})
-
-    hass.config_entries.async_setup_platforms(entry, PLATFORMS)
+    
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
